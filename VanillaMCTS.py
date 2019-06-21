@@ -37,6 +37,9 @@ class VanillaMCTS(object):
                           'q': None}}
         return tree
 
+    #def seek_terminality(self):
+
+
     def selection(self):
         '''
         select leaf node which have maximum uct value
@@ -48,32 +51,25 @@ class VanillaMCTS(object):
         '''
         leaf_node_found = False
         leaf_node_id = (0,) # root node id
-        # print('-------- selection ----------')
+        
 
         while not leaf_node_found:
             node_id = leaf_node_id
             n_child = len(self.tree[node_id]['child'])
-            # print('n_child: ', n_child)
+            
 
             if n_child == 0:
                 leaf_node_id = node_id
                 leaf_node_found = True
             else:
                 maximum_uct_value = -100.0
+                
                 for i in range(n_child):
                     action = self.tree[node_id]['child'][i]
-
-                    # print('leaf_node_id', leaf_node_id)
                     child_id = node_id + (action,)
                     w = self.tree[child_id]['w']
                     n = self.tree[child_id]['n']
                     total_n = self.total_n
-                    # parent_id = self.tree[node_id]['parent']
-                    # if parent_id == None:
-                    #     total_n = 1
-                    # else:
-                    #     total_n = self.tree[parent_id]['n']
-
                     if n == 0:
                         n = 1e-4
                     exploitation_value = w / n
@@ -301,7 +297,7 @@ class VanillaMCTS(object):
         print('\n----------------------')
         print(' [-] game board: ')
         for row in self.tree[(0,)]['state']:
-            print (row)
+            print(row)
         print(' [-] person to play: ', self.tree[(0,)]['player'])
         print('\n [-] best_action: %d' % best_action)
         print(' best_q = %.2f' % (best_q))

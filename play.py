@@ -1,4 +1,5 @@
-from env import env as game
+# from env import env as game
+import env as game
 import numpy as np
 from VanillaMCTS import VanillaMCTS
 import time
